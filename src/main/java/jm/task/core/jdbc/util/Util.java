@@ -13,11 +13,29 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 public class Util {
+    private static volatile Util INSTANCE;
     private static final String DB_Driver = "com.mysql.cj.jdbc.Driver";
     private static final String DB_URL = "jdbc:mysql://localhost:3306/mydbtest";
     private static final String DB_USERNAME = "root";
     private static final String DB_PASSWORD = "root";
     private static SessionFactory sessionFactory;
+
+
+    public static Util getInstance() {
+        Util localInstance = INSTANCE;
+        if (localInstance == null) {
+            synchronized (Util.class) {
+                localInstance = INSTANCE;
+                if (localInstance == null) {
+                    INSTANCE = localInstance = new Util();
+                }
+            }
+        }
+        return localInstance;
+    }
+
+
+
     public static Connection getConnection() {
         Connection connection;
         try {
