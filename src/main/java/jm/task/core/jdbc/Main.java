@@ -12,8 +12,7 @@ public class Main {
 
     public static void main(String[] args) throws SQLException {
 
-        Util util = new Util();
-        util.getSessionFactory();
+
         user.createUsersTable();
         user.saveUser("Name1", "LastName1", (byte) 20);
         user.saveUser("Name2", "LastName2", (byte) 25);
