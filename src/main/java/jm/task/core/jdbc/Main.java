@@ -8,10 +8,9 @@ import jm.task.core.jdbc.util.Util;
 import java.sql.SQLException;
 
 public class Main {
-    private static final UserService user = new UserServiceImpl();
-
     public static void main(String[] args) throws SQLException {
 
+        UserService user = new UserServiceImpl();
 
         user.createUsersTable();
         user.saveUser("Name1", "LastName1", (byte) 20);

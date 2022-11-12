@@ -11,8 +11,9 @@ import java.util.List;
 
 public class UserDaoHibernateImpl implements UserDao {
 
-    private final SessionFactory sessionFactory = Util.getSessionFactory();
-    Transaction transaction = null;
+    private  SessionFactory sessionFactory = Util.getInstance().getSessionFactory();
+
+    private Transaction transaction = null;
     public UserDaoHibernateImpl() {
 
     }
@@ -21,20 +22,20 @@ public class UserDaoHibernateImpl implements UserDao {
     public void createUsersTable() {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            String query = "create table if not exists users\n" +
+            session.createSQLQuery("create table if not exists users\n" +
                     "(\n" + "    id       INT auto_increment not null,\n" +
                     "    name     TEXT not null,\n" +
                     "    lastName TEXT not null,\n" +
                     "    age      INT  null,\n" +
                     "    constraint users_pk\n" +
-                    "        primary key (id)\n" + ");";
-            session.createSQLQuery(query).executeUpdate();
+                    "        primary key (id)\n" + ");").executeUpdate();
             transaction.commit();
             System.out.println("Table created");
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
@@ -42,14 +43,14 @@ public class UserDaoHibernateImpl implements UserDao {
     public void dropUsersTable() {
         try (Session session = sessionFactory.openSession()) {
             transaction = session.beginTransaction();
-            String sql = "DROP TABLE IF EXISTS users";
-            session.createSQLQuery(sql).executeUpdate();
+            session.createSQLQuery("DROP TABLE IF EXISTS users").executeUpdate();
             transaction.commit();
             System.out.println("Table deleted");
         } catch (HibernateException e) {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
@@ -65,6 +66,7 @@ public class UserDaoHibernateImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
@@ -80,6 +82,7 @@ public class UserDaoHibernateImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 
@@ -94,6 +97,7 @@ public class UserDaoHibernateImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
         return result;
     }
@@ -109,6 +113,7 @@ public class UserDaoHibernateImpl implements UserDao {
             if (transaction != null) {
                 transaction.rollback();
             }
+            e.printStackTrace();
         }
     }
 }
