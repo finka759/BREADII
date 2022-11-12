@@ -21,18 +21,7 @@ public class Util {
     private static SessionFactory sessionFactory;
 
 
-    public static Util getInstance() {
-        Util localInstance = INSTANCE;
-        if (localInstance == null) {
-            synchronized (Util.class) {
-                localInstance = INSTANCE;
-                if (localInstance == null) {
-                    INSTANCE = localInstance = new Util();
-                }
-            }
-        }
-        return localInstance;
-    }
+
 
 
 
@@ -65,5 +54,18 @@ public class Util {
             }
         }
         return sessionFactory;
+    }
+
+    public static Util getInstance() {
+        Util localInstance = INSTANCE;
+        if (localInstance == null) {
+            synchronized (Util.class) {
+                localInstance = INSTANCE;
+                if (localInstance == null) {
+                    INSTANCE = localInstance = new Util();
+                }
+            }
+        }
+        return localInstance;
     }
 }
